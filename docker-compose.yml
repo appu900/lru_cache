@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_scraper
+    environment:
+      POSTGRES_DB: scraper
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+  sqlc:
+    image: sqlc/sqlc:latest
+    volumes:
+      - .:/src
+    working_dir: /src
+
+volumes:
+  postgres_data:
